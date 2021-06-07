@@ -14,18 +14,7 @@ class RentalByUserUseCase {
 
   async execute(user_id: string): Promise<Rental[]> {
     const rentals = await this.rentalsRepository.findByUser(user_id);
-
-    const response = rentals.map(async(rental) => {
-      const car = await this.usersRepository.findById(rental.car_id);
-
-      return {
-        ...rental,
-        car,
-      }
-    });
-
-
-    return response;
+    return rentals;
   }
 }
 

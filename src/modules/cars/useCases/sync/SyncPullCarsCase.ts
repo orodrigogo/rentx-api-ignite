@@ -20,12 +20,12 @@ class SyncPullCarsCase {
     const updated = await this.usersRepository.listByUpdated(lastPulledVersion);
     const created = await this.usersRepository.listByCreated(lastPulledVersion);
 
-    const onlyNews = created.filter(car => car.created_at == car.updated_at);
-    const onlyUpdated = created.filter(car => car.created_at != car.updated_at);
+    //const onlyNews = created.filter(car => car.created_at == car.updated_at);
+    //const onlyUpdated = updated.filter(car => car.created_at != car.updated_at);
 
     return {
-      created: onlyNews,
-      updated: onlyUpdated,
+      created,
+      updated,
       deleted: [],
     }
   }

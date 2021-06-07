@@ -8,7 +8,7 @@ class ListCarsController {
 
     const cars = await listCarsUseCase.execute();
 
-    return response.status(201).json(cars);
+    return response.status(200).json(cars);
   }
 }
 

@@ -1,4 +1,4 @@
-import { getRepository, Repository, MoreThan } from "typeorm";
+import { getRepository, Repository, MoreThan, LessThan, MoreThanOrEqual } from "typeorm";
 import { ICarsRepository } from "../../../repositories/ICarsRepository";
 import { Car } from "../entities/Car";
 
@@ -11,7 +11,7 @@ class CarsRepository implements ICarsRepository {
 
   async listByUpdated(lastPulledVersion: number): Promise<Car[]> {
     const cars = await this.repository.find({
-      updated_at: MoreThan(lastPulledVersion)
+      updated_at: MoreThanOrEqual(lastPulledVersion)
     });
 
     return cars;
@@ -26,7 +26,9 @@ class CarsRepository implements ICarsRepository {
   }
 
   async findById(id: string): Promise<Car> {
-    const car = await this.repository.findOne(id);
+    const car = await this.repository.findOne(id, {
+      relations: ['photos', 'accessories']
+    });
 
     return car;
   }
