@@ -19,13 +19,19 @@ class SyncPullCarsCase {
   async execute(lastPulledVersion: number): Promise<ResponseData> {
     const updated = await this.usersRepository.listByUpdated(lastPulledVersion);
     const created = await this.usersRepository.listByCreated(lastPulledVersion);
+    
+    let onlyUpdated = [];
 
-    //const onlyNews = created.filter(car => car.created_at == car.updated_at);
-    //const onlyUpdated = updated.filter(car => car.created_at != car.updated_at);
+    updated.forEach(carUpdated => {
+      const isNew = created.filter(car => car.id === carUpdated.id);
+      if(!isNew){
+        onlyUpdated.push(carUpdated);
+      }
+    });
 
     return {
       created,
-      updated,
+      updated: onlyUpdated,
       deleted: [],
     }
   }
