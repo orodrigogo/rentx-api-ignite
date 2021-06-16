@@ -10,16 +10,18 @@ class CarsRepository implements ICarsRepository {
   }
 
   async listByUpdated(lastPulledVersion: number): Promise<Car[]> {
-    const cars = await this.repository.find({
-      updated_at: MoreThanOrEqual(lastPulledVersion)
-    });
-
+    const cars = await this.repository
+    .createQueryBuilder()
+    .where("updated_at >= :lastPulledVersion AND updated_at <> created_at",
+    { lastPulledVersion })
+    .getMany();     
+    
     return cars;
   }
 
   async listByCreated(lastPulledVersion: number): Promise<Car[]> {
     const cars = await this.repository.find({
-      created_at: MoreThan(lastPulledVersion)
+      created_at: MoreThan(lastPulledVersion)      
     });
 
     return cars;

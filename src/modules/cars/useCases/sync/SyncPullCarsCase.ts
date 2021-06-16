@@ -20,18 +20,9 @@ class SyncPullCarsCase {
     const updated = await this.usersRepository.listByUpdated(lastPulledVersion);
     const created = await this.usersRepository.listByCreated(lastPulledVersion);
     
-    let onlyUpdated = [];
-
-    updated.forEach(carUpdated => {
-      const isNew = created.filter(car => car.id === carUpdated.id);
-      if(!isNew){
-        onlyUpdated.push(carUpdated);
-      }
-    });
-
     return {
       created,
-      updated: onlyUpdated,
+      updated,
       deleted: [],
     }
   }
