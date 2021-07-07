@@ -16,6 +16,7 @@ class CarsRepository implements ICarsRepository {
     { lastPulledVersion })
     .getMany();     
     
+    
     return cars;
   }
 
